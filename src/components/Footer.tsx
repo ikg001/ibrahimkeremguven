@@ -2,13 +2,14 @@
 
 import { Terminal, ArrowUp } from 'lucide-react';
 import { PERSONAL_INFO } from '@/data/portfolioData';
-import { GithubIcon, LinkedinIcon, YoutubeIcon } from '@/components/Icons';
+import { GithubIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from '@/components/Icons';
 
 const SOCIALS = [
-  { href: PERSONAL_INFO.github, label: 'GitHub', Icon: GithubIcon },
-  { href: PERSONAL_INFO.linkedin, label: 'LinkedIn', Icon: LinkedinIcon },
-  { href: PERSONAL_INFO.youtube, label: 'YouTube', Icon: YoutubeIcon },
-].filter((item): item is { href: string; label: string; Icon: typeof GithubIcon } => Boolean(item.href));
+  { href: PERSONAL_INFO.github, label: 'GitHub', Icon: GithubIcon, rel: 'noreferrer' },
+  { href: PERSONAL_INFO.linkedin, label: 'LinkedIn', Icon: LinkedinIcon, rel: 'noreferrer' },
+  { href: PERSONAL_INFO.youtube, label: 'YouTube', Icon: YoutubeIcon, rel: 'noreferrer' },
+  { href: PERSONAL_INFO.instagram, label: 'Instagram', Icon: InstagramIcon, rel: 'noopener noreferrer' },
+].filter((item): item is { href: string; label: string; Icon: typeof GithubIcon; rel: string } => Boolean(item.href));
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -33,12 +34,12 @@ export default function Footer() {
 
           {/* Socials & Back to top */}
           <div className="flex items-center gap-4">
-            {SOCIALS.map(({ href, label, Icon }) => (
+            {SOCIALS.map(({ href, label, Icon, rel }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel={rel}
                 className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
                 aria-label={label}
               >

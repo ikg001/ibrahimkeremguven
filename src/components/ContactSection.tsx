@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Mail, MessageSquare, Copy, Check, ArrowUpRight, Send, Clock, MapPin } from 'lucide-react';
 import { PERSONAL_INFO } from '@/data/portfolioData';
+import { InstagramIcon } from '@/components/Icons';
 
 export default function ContactSection() {
   const searchParams = useSearchParams();
@@ -100,6 +101,29 @@ export default function ContactSection() {
                   )}
                 </div>
               </button>
+
+              {PERSONAL_INFO.instagram ? (
+                <a
+                  href={PERSONAL_INFO.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="w-full flex items-center justify-between p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 hover:border-emerald-500/50 transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                      <InstagramIcon className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono uppercase text-zinc-500">Instagram</div>
+                      <div className="text-xs sm:text-sm font-medium text-zinc-200 group-hover:text-white">
+                        yazilim.dev.io
+                      </div>
+                    </div>
+                  </div>
+                  <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                </a>
+              ) : null}
 
               {PERSONAL_INFO.whatsapp ? (
                 <a

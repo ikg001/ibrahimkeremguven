@@ -45,6 +45,7 @@ export interface PersonalInfo {
   github?: string;
   linkedin?: string;
   youtube?: string;
+  instagram?: string;
   whatsapp?: string;
   stats: { label: string; value: string; detail: string }[];
 }
@@ -60,6 +61,7 @@ export const PERSONAL_INFO: PersonalInfo = {
   github: "https://github.com/ikg001",
   linkedin: "https://www.linkedin.com/in/ibrahim-kerem-g%C3%BCven-875531295/",
   youtube: "https://www.youtube.com/@ikg001",
+  instagram: "https://www.instagram.com/yazilim.dev.io/",
   stats: [
     { value: "Yazılım Müh. 4. sınıf", label: "Fırat Üniversitesi", detail: "Lisans öğrencisi" },
     { value: "Edict stajyeri", label: "Staj", detail: "Devam ediyor" },
