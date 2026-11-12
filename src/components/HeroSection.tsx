@@ -14,7 +14,7 @@ export default function HeroSection() {
         {/* Editorial Subtitle / Tag */}
         <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-emerald-950/40 border border-emerald-500/20 text-emerald-400 text-xs font-mono mb-8 backdrop-blur-sm animate-fade-in">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-          <span className="font-medium tracking-wider uppercase">Mimari Zanaat & Full-Stack Mühendislik</span>
+          <span className="font-medium tracking-wider uppercase">Fırat Üniversitesi · Yazılım Mühendisliği 4. sınıf</span>
         </div>
 
         {/* Narrative Headline */}
@@ -28,8 +28,10 @@ export default function HeroSection() {
 
           <p className="text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl font-normal">
             Ben <strong className="text-zinc-200 font-semibold">{PERSONAL_INFO.name}</strong>. 
-            Arayüzün en hassas pikselinden, arka plan servislerinin alt-saniye veri akışlarına kadar 
-            ölçeklenebilir, dayanıklı ve hikayesi olan web uygulamaları inşa ediyorum.
+            Fırat Üniversitesi Yazılım Mühendisliği 4. sınıf öğrencisiyim. Edict&apos;te stajyerim
+            ve FUTURE öğrenci topluluğunun kurucusu ve başkanıyım. YouTube&apos;da İKG kanalında
+            ve Instagram&apos;da yazilim.dev.io hesabında Türkçe yapay zekâ kodlama ajanları
+            içeriği üretiyorum.
           </p>
         </div>
 
@@ -87,7 +89,7 @@ export default function HeroSection() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6">
             {PERSONAL_INFO.stats.map((stat, idx) => (
               <div key={idx} className="space-y-1">
-                <div className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white">
+                <div className="text-base sm:text-lg font-semibold tracking-tight text-white leading-snug">
                   {stat.value}
                 </div>
                 <div className="text-xs font-medium text-zinc-300">{stat.label}</div>

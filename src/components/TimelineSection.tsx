@@ -10,14 +10,15 @@ export default function TimelineSection() {
         {/* Section Header */}
         <div className="max-w-3xl mb-16 space-y-4">
           <div className="editorial-tag">
-            <span>Yolculuk & Kilometre Taşları</span>
+            <span>Hakkımda & Yolculuk</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
-            Deneyim bir takvim değil,{' '}
-            <span className="text-zinc-400 font-light block">çözülen krizlerin hafızasıdır.</span>
+            Öğrencilik, staj ve topluluk.{' '}
+            <span className="text-zinc-400 font-light block">İçerikle birlikte süren bir yol.</span>
           </h2>
           <p className="text-zinc-400 text-base sm:text-lg">
-            İlk satır koddan bugünün yüksek erişilebilirlikli mikroservislerine uzanan adımlar:
+            Fırat Üniversitesi&apos;nde 4. sınıf öğrencisiyim. Staj, topluluk, TÜBİTAK başvuruları
+            ve Türkçe içerik üretimi sürüyor.
           </p>
         </div>
 
@@ -32,12 +33,16 @@ export default function TimelineSection() {
 
               <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/10 space-y-4">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/5">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-emerald-400" />
-                    <span className="text-sm font-mono font-bold text-white tracking-wider">
-                      {m.year}
-                    </span>
-                  </div>
+                  {m.year ? (
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-emerald-400" />
+                      <span className="text-sm font-mono font-bold text-white tracking-wider">
+                        {m.year}
+                      </span>
+                    </div>
+                  ) : (
+                    <span className="text-sm font-mono text-zinc-500">Yıl belirtilmedi</span>
+                  )}
                   <span className="text-xs font-mono px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 w-fit">
                     {m.role}
                   </span>
@@ -56,17 +61,19 @@ export default function TimelineSection() {
                   {m.story}
                 </p>
 
-                <div className="pt-3 border-t border-white/5 flex flex-wrap gap-2">
-                  {m.technologies.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[11px] font-mono text-zinc-400 bg-zinc-900/80 px-2 py-0.5 rounded border border-zinc-800 flex items-center gap-1"
-                    >
-                      <GitCommit className="w-3 h-3 text-zinc-500" />
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                {m.technologies && m.technologies.length > 0 && (
+                  <div className="pt-3 border-t border-white/5 flex flex-wrap gap-2">
+                    {m.technologies.map((t) => (
+                      <span
+                        key={t}
+                        className="text-[11px] font-mono text-zinc-400 bg-zinc-900/80 px-2 py-0.5 rounded border border-zinc-800 flex items-center gap-1"
+                      >
+                        <GitCommit className="w-3 h-3 text-zinc-500" />
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}

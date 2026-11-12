@@ -22,6 +22,7 @@ export default function Navbar() {
     { label: 'Projeler', href: '#projeler' },
     { label: 'Zanaat', href: '#zanaat' },
     { label: 'Yolculuk', href: '#yolculuk' },
+    { label: 'Hizmetler', href: '#hizmetler' },
   ];
 
   return (
@@ -45,7 +46,7 @@ export default function Navbar() {
             {PERSONAL_INFO.name}
           </span>
           <span className="hidden sm:inline-block text-[11px] font-mono text-zinc-500 border border-zinc-800 rounded px-1.5 py-0.5">
-            Full-Stack
+            4. sınıf
           </span>
         </a>
 

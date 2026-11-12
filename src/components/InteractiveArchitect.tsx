@@ -1,20 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-import { ARCHITECTURE_PRESETS } from '@/data/portfolioData';
+import Link from 'next/link';
+import { ARCHITECTURE_PRESETS, PERSONAL_INFO, contactHref } from '@/data/portfolioData';
 import { Send, Check, Sparkles, Layers, Activity, ShoppingBag, Cpu, ShieldAlert, Zap, Globe2 } from 'lucide-react';
+
+const priorities = [
+  { label: 'Düşük gecikme', icon: Zap },
+  { label: 'Yüksek eşzamanlılık', icon: Activity },
+  { label: 'Üst düzey güvenlik ve gizlilik', icon: ShieldAlert },
+  { label: 'Küresel erişim ve SEO', icon: Globe2 },
+];
 
 export default function InteractiveArchitect() {
   const [selectedPresetId, setSelectedPresetId] = useState<string>(ARCHITECTURE_PRESETS[0].id);
-  const [selectedPriority, setSelectedPriority] = useState<string>('Düşük Gecikme (<50ms)');
+  const [selectedPriority, setSelectedPriority] = useState<string>(priorities[0].label);
   const [copied, setCopied] = useState(false);
-
-  const priorities = [
-    { label: 'Düşük Gecikme (<50ms)', icon: Zap },
-    { label: 'Yüksek Eşzamanlılık (100k+)', icon: Activity },
-    { label: 'Üst Düzey Güvenlik & Gizlilik', icon: ShieldAlert },
-    { label: 'Küresel CDN & SEO Odaklı', icon: Globe2 },
-  ];
 
   const currentPreset = ARCHITECTURE_PRESETS.find(p => p.id === selectedPresetId) || ARCHITECTURE_PRESETS[0];
 
@@ -28,10 +29,9 @@ export default function InteractiveArchitect() {
     setTimeout(() => setCopied(false), 2200);
   };
 
-  const handleWhatsApp = () => {
-    const text = encodeURIComponent(formulateMessage());
-    window.open(`https://wa.me/905000000000?text=${text}`, '_blank');
-  };
+  const contactLink = PERSONAL_INFO.whatsapp
+    ? `https://wa.me/${PERSONAL_INFO.whatsapp}?text=${encodeURIComponent(formulateMessage())}`
+    : contactHref(`${currentPreset.name} · örnek senaryo`, formulateMessage());
 
   const getPresetIcon = (iconName: string) => {
     switch (iconName) {
@@ -62,6 +62,9 @@ export default function InteractiveArchitect() {
           <p className="text-zinc-400 text-base sm:text-lg">
             Proje tipinizi ve kritik önceliğinizi seçin. Sistem bileşenlerinin nasıl birbirine bağlandığını 
             görün ve doğrudan projeye özel bir yol haritası oluşturun.
+          </p>
+          <p className="text-xs font-mono text-amber-200/90">
+            Hedef / örnek senaryo. Gecikme ve kapasite değerleri tasarım hedefidir.
           </p>
         </div>
 
@@ -101,7 +104,7 @@ export default function InteractiveArchitect() {
             <div className="space-y-3">
               <label className="text-xs font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2">
                 <span className="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-[11px]">2</span>
-                <span>Kritik Önceliği Seçin</span>
+                <span>Kritik Önceliği Seçin · örnek hedef</span>
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 {priorities.map((p) => {
@@ -125,7 +128,6 @@ export default function InteractiveArchitect() {
               </div>
             </div>
 
-            {/* Message Generator & Direct WhatsApp Trigger */}
             <div className="p-5 rounded-2xl bg-zinc-950/80 border border-zinc-800 space-y-4">
               <div className="flex items-center justify-between text-xs">
                 <span className="font-mono text-zinc-400">Oluşturulan İstek Mesajı</span>
@@ -135,13 +137,25 @@ export default function InteractiveArchitect() {
                 &ldquo;{formulateMessage()}&rdquo;
               </p>
               <div className="flex items-center gap-3">
-                <button
-                  onClick={handleWhatsApp}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs transition-colors shadow-sm"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>WhatsApp ile İlet</span>
-                </button>
+                {PERSONAL_INFO.whatsapp ? (
+                  <a
+                    href={contactLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs transition-colors shadow-sm"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>WhatsApp ile İlet</span>
+                  </a>
+                ) : (
+                  <Link
+                    href={contactLink}
+                    className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-semibold text-xs transition-colors shadow-sm"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>İletişim formuna aktar</span>
+                  </Link>
+                )}
                 <button
                   onClick={handleCopy}
                   className="py-2.5 px-4 rounded-xl bg-zinc-900 border border-zinc-700 text-zinc-300 hover:text-white text-xs font-medium transition-colors flex items-center gap-1.5"
@@ -162,8 +176,8 @@ export default function InteractiveArchitect() {
                   {currentPreset.name} Devre Şeması
                 </span>
               </div>
-              <div className="text-[11px] font-mono text-zinc-400">
-                Hedef: <strong className="text-emerald-400">{currentPreset.latency}</strong>
+              <div className="text-[11px] font-mono text-amber-200">
+                Hedef / örnek senaryo: <strong className="text-emerald-400">{currentPreset.latency}</strong>
               </div>
             </div>
 
@@ -273,7 +287,7 @@ export default function InteractiveArchitect() {
 
             {/* Summary Stat */}
             <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs text-zinc-400">
-              <span className="font-mono">Kapasite Hedefi: {currentPreset.scale}</span>
+              <span className="font-mono">Örnek kapasite hedefi: {currentPreset.scale}</span>
               <span className="text-emerald-400 font-mono font-medium">Uçtan Uca Tip Güvenliği</span>
             </div>
           </div>

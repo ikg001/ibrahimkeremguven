@@ -2,7 +2,14 @@
 
 import { Terminal, ArrowUp } from 'lucide-react';
 import { PERSONAL_INFO } from '@/data/portfolioData';
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/Icons';
+import { GithubIcon, InstagramIcon, LinkedinIcon, YoutubeIcon } from '@/components/Icons';
+
+const SOCIALS = [
+  { href: PERSONAL_INFO.github, label: 'GitHub', Icon: GithubIcon, rel: 'noreferrer' },
+  { href: PERSONAL_INFO.linkedin, label: 'LinkedIn', Icon: LinkedinIcon, rel: 'noreferrer' },
+  { href: PERSONAL_INFO.youtube, label: 'YouTube', Icon: YoutubeIcon, rel: 'noreferrer' },
+  { href: PERSONAL_INFO.instagram, label: 'Instagram', Icon: InstagramIcon, rel: 'noopener noreferrer' },
+].filter((item): item is { href: string; label: string; Icon: typeof GithubIcon; rel: string } => Boolean(item.href));
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -27,33 +34,18 @@ export default function Footer() {
 
           {/* Socials & Back to top */}
           <div className="flex items-center gap-4">
-            <a
-              href={PERSONAL_INFO.github}
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
-              aria-label="GitHub"
-            >
-              <GithubIcon className="w-4 h-4" />
-            </a>
-            <a
-              href={PERSONAL_INFO.linkedin}
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
-              aria-label="LinkedIn"
-            >
-              <LinkedinIcon className="w-4 h-4" />
-            </a>
-            <a
-              href={PERSONAL_INFO.twitter}
-              target="_blank"
-              rel="noreferrer"
-              className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
-              aria-label="Twitter / X"
-            >
-              <TwitterIcon className="w-4 h-4" />
-            </a>
+            {SOCIALS.map(({ href, label, Icon, rel }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel={rel}
+                className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-white/5 transition-colors"
+                aria-label={label}
+              >
+                <Icon className="w-4 h-4" />
+              </a>
+            ))}
 
             <button
               onClick={scrollToTop}
