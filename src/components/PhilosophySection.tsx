@@ -14,7 +14,7 @@ export default function PhilosophySection() {
       accent: "from-emerald-500 to-teal-400",
       description: "Bir web uygulaması sadece iyi görünmemeli; parmak ucunda yağ gibi kaymalı, gecikme hissettirmemeli ve kullanıcıyla konuşmalıdır.",
       tenets: [
-        "Sub-100ms İlk İçerikli Boyama (FCP)",
+        "Hızlı ilk içerik ve akıcı gezinme",
         "Erişilebilirlik (A11y) ve sezgisel gezinme",
         "Durum yönetiminde (State) öngörülebilirlik ve hız"
       ]
@@ -39,7 +39,7 @@ export default function PhilosophySection() {
       description: "Veri bir ürünün en kıymetli varlığıdır. İlişkisel tutarlılık, akıllı indeksleme ve çok katmanlı önbellek stratejisiyle yönetilir.",
       tenets: [
         "ACID prensipleriyle kritik işlem garantisi",
-        "Redis ile sub-millisecond önbellek katmanı",
+        "Redis ile önbellek katmanı",
         "Ölçeklendikçe tıkanmayan akıllı indeksleme"
       ]
     },

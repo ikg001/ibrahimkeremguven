@@ -24,11 +24,11 @@ export default function ProjectsSection() {
               <span>Seçilmiş Çalışmalar & Vaka İncelemeleri</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white">
-              Sadece kod değil;{' '}
-              <span className="text-zinc-400 font-light block">çözülen gerçek problemler.</span>
+              Demo ve kişisel projeler.{' '}
+              <span className="text-zinc-400 font-light block">Ölçülmüş sonuç değil.</span>
             </h2>
             <p className="text-zinc-400 text-base">
-              Her proje bir mimari meydan okumayla başlar. Problem, geliştirilen strateji ve somut sonuçlar:
+              Her kart bir tasarım denemesidir. Metrikler, ulaşılmış sonuç olarak değil tasarım hedefi olarak yazılır.
             </p>
           </div>
 
@@ -66,9 +66,14 @@ export default function ProjectsSection() {
               <div className="space-y-6">
                 {/* Meta header */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300">
-                    {project.category}
-                  </span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-200">
+                      Demo / kişisel proje
+                    </span>
+                    <span className="text-[11px] font-mono px-2.5 py-1 rounded-md bg-white/5 border border-white/10 text-zinc-300">
+                      {project.category}
+                    </span>
+                  </div>
 
                   <div className="flex items-center gap-2">
                     {project.githubUrl && (
@@ -132,7 +137,7 @@ export default function ProjectsSection() {
                 {/* Metrics */}
                 <div className="pt-2">
                   <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mb-2">
-                    Kritik Başarı Metrikleri
+                    Tasarım hedefleri
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {project.metrics.map((metric, mIdx) => (

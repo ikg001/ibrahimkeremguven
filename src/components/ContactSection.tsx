@@ -1,15 +1,32 @@
 'use client';
 
 import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Mail, MessageSquare, Copy, Check, ArrowUpRight, Send, Clock, MapPin } from 'lucide-react';
 import { PERSONAL_INFO } from '@/data/portfolioData';
 
 export default function ContactSection() {
+  const searchParams = useSearchParams();
+  const konuParam = searchParams.get('konu') ?? '';
+  const mesajParam = searchParams.get('mesaj') ?? '';
+  const prefillKey = `${konuParam}\n${mesajParam}`;
+
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
-  const [formMsg, setFormMsg] = useState('');
+  const [subjectDraft, setSubjectDraft] = useState<string | null>(null);
+  const [messageDraft, setMessageDraft] = useState<string | null>(null);
+  const [appliedPrefill, setAppliedPrefill] = useState(prefillKey);
   const [sentSuccess, setSentSuccess] = useState(false);
+
+  if (prefillKey !== appliedPrefill) {
+    setAppliedPrefill(prefillKey);
+    setSubjectDraft(null);
+    setMessageDraft(null);
+  }
+
+  const formSubject = subjectDraft ?? konuParam;
+  const formMsg = messageDraft ?? mesajParam;
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(PERSONAL_INFO.email);
@@ -22,17 +39,18 @@ export default function ContactSection() {
     if (!formName || !formMsg) return;
     
     // Create mailto fallback or custom action
+    const subjectBase = formSubject.trim() || 'İş Birliği / Proje Görüşmesi';
     const mailtoLink = `mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(
-      `İş Birliği / Proje Görüşmesi: ${formName}`
+      `${subjectBase}: ${formName}`
     )}&body=${encodeURIComponent(
-      `Gönderen: ${formName} (${formEmail})\n\nMesaj:\n${formMsg}`
+      `Gönderen: ${formName} (${formEmail})\nKonu: ${subjectBase}\n\nMesaj:\n${formMsg}`
     )}`;
     window.location.href = mailtoLink;
     setSentSuccess(true);
   };
 
   return (
-    <section id="iletisim" className="py-24 relative bg-[#07090E] border-t border-white/5">
+    <section id="iletisim" className="py-24 relative bg-[#07090E] border-t border-white/5 scroll-mt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Narrative Column */}
@@ -83,25 +101,27 @@ export default function ContactSection() {
                 </div>
               </button>
 
-              <a
-                href="https://wa.me/905000000000"
-                target="_blank"
-                rel="noreferrer"
-                className="w-full flex items-center justify-between p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 hover:border-emerald-500/50 transition-colors group"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
-                    <MessageSquare className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="text-[10px] font-mono uppercase text-zinc-500">Hızlı Yanıt</div>
-                    <div className="text-xs sm:text-sm font-medium text-zinc-200 group-hover:text-white">
-                      WhatsApp Üzerinden Mesaj
+              {PERSONAL_INFO.whatsapp ? (
+                <a
+                  href={`https://wa.me/${PERSONAL_INFO.whatsapp}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full flex items-center justify-between p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 hover:border-emerald-500/50 transition-colors group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+                      <MessageSquare className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-mono uppercase text-zinc-500">Hızlı Yanıt</div>
+                      <div className="text-xs sm:text-sm font-medium text-zinc-200 group-hover:text-white">
+                        WhatsApp Üzerinden Mesaj
+                      </div>
                     </div>
                   </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
-              </a>
+                  <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 transition-colors" />
+                </a>
+              ) : null}
             </div>
 
             {/* Availability details */}
@@ -116,7 +136,7 @@ export default function ContactSection() {
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="w-3.5 h-3.5 text-zinc-500" />
-                <span>Yanıt süresi: Genellikle &lt; 24 saat</span>
+                <span>Dönüş e-posta üzerinden yapılır</span>
               </div>
             </div>
           </div>
@@ -156,12 +176,24 @@ export default function ContactSection() {
               </div>
 
               <div className="space-y-1.5">
+                <label className="text-xs font-mono text-zinc-300" htmlFor="konu">Konu</label>
+                <input
+                  id="konu"
+                  type="text"
+                  value={formSubject}
+                  onChange={(e) => setSubjectDraft(e.target.value)}
+                  placeholder="Örn: Yapay zekâ asistanı"
+                  className="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-emerald-500 transition-colors"
+                />
+              </div>
+
+              <div className="space-y-1.5">
                 <label className="text-xs font-mono text-zinc-300">Proje Detayları & İhtiyaçlarınız *</label>
                 <textarea
                   rows={4}
                   required
                   value={formMsg}
-                  onChange={(e) => setFormMsg(e.target.value)}
+                  onChange={(e) => setMessageDraft(e.target.value)}
                   placeholder="Geliştirmek istediğiniz ürün, hedeflenen süre, beklenen özellikler..."
                   className="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-sm text-white placeholder-zinc-600 focus:outline-none focus:border-emerald-500 transition-colors resize-none"
                 />

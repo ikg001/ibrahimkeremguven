@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -6,6 +7,7 @@ import InteractiveArchitect from "@/components/InteractiveArchitect";
 import ProjectsSection from "@/components/ProjectsSection";
 import SkillsSection from "@/components/SkillsSection";
 import TimelineSection from "@/components/TimelineSection";
+import ServicesSection from "@/components/ServicesSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
@@ -21,7 +23,10 @@ export default function Home() {
           <ProjectsSection />
           <SkillsSection />
           <TimelineSection />
-          <ContactSection />
+          <ServicesSection />
+          <Suspense fallback={null}>
+            <ContactSection />
+          </Suspense>
         </main>
         <Footer />
       </div>
